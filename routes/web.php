@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\myController::class,'show_index']);
+Route::get('/', [App\Http\Controllers\myController::class, 'show_index']);
