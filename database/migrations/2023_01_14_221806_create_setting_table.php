@@ -17,7 +17,7 @@ class CreateSettingTable extends Migration
             $table->id();
 
             $table->string('week_days',2)->default('5天');
-            $table->string('number_of_class',1)->default('8');
+            $table->string('number_of_class',2)->default('8');
 
             $table->timestamps();
         });
