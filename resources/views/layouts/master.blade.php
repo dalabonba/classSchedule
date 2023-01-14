@@ -18,13 +18,8 @@
     }
 </style>
 <div class="container">
-    <div class="row bg-dark mb-5 mt-1">
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-                <h1 style="color: goldenrod">課表</h1>
-            </li>
-        </ul>
-    </div>
+
+    @include('layouts.bar')
 
     @yield('content')
 
