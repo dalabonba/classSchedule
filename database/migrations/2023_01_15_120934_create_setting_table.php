@@ -16,7 +16,7 @@ class CreateSettingTable extends Migration
         Schema::create('setting', function (Blueprint $table) {
             $table->id();
 
-            $table->string('week_days',2)->default('5天');
+            $table->integer('week_days')->default(5);
             $table->integer('number_of_class')->default(8);
 
             $table->timestamps();

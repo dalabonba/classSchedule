@@ -19,7 +19,6 @@ class CreateClassTable extends Migration
             $table->string('class_name',20)->nullable()->default('課程名稱');
             $table->string('professor',30)->nullable()->default('教授名稱');
             $table->string('classroom',20)->nullable()->default('教室位置');
-            $table->string('homework')->nullable()->default('作業內容');
 
             $table->timestamps();
         });
