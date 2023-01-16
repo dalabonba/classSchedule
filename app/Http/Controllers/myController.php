@@ -52,6 +52,7 @@ class myController extends Controller
         if ($db_class_table->isEmpty()) {
             return redirect(route('show_index'));
         } else {
+            //將目前課表表格設定值傳至setting.blade，用於設定下拉選單預設值
             $week_days=DB::table('setting')->value('week_days');
             $number_of_class=DB::table('setting')->value('number_of_class');
             $title = '設定';

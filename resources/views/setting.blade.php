@@ -21,7 +21,7 @@
             </div>
 
             <div class="col-2 text-center mt-5">
-                <button type="submit" class="btn btn-success">確認變更</button>
+                <button type="submit" class="btn btn-success">確認變更並重設課表</button>
             </div>
         </div>
 
