@@ -4,30 +4,19 @@
     <form action="{{route('store_setting')}}" method="post">
 
         <div class="row justify-content-center">
+            @csrf
             <div class="col-3">
                 <select class="form-select my-5" name="week_days">
-                    <option selected value="5天">星期一到五</option>
-                    <option value="7天">星期一到日</option>
+                    <option @if($week_days==5) selected @endif value="5">星期一到五</option>
+                    <option @if($week_days==7) selected @endif value="7">星期一到日</option>
                 </select>
             </div>
 
             <div class="col-3">
                 <select class="form-select my-5" name="number_of_class">
-                    <option value="1">1節</option>
-                    <option value="2">2節</option>
-                    <option value="3">3節</option>
-                    <option value="4">4節</option>
-                    <option value="5">5節</option>
-                    <option value="6">6節</option>
-                    <option value="7">7節</option>
-                    <option selected value="8">8節</option>
-                    <option value="9">9節</option>
-                    <option value="10">10節</option>
-                    <option value="11">11節</option>
-                    <option value="12">12節</option>
-                    <option value="13">13節</option>
-                    <option value="14">14節</option>
-                    <option value="15">15節</option>
+                    @for($i=1;$i<=15;$i++)
+                        <option @if($i==$number_of_class) selected @endif value="{{$i}}">{{$i}}節</option>
+                    @endfor
                 </select>
             </div>
 

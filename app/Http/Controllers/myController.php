@@ -52,34 +52,36 @@ class myController extends Controller
         if ($db_class_table->isEmpty()) {
             return redirect(route('show_index'));
         } else {
-            return view('setting', ['title' => '設定']);
+            $week_days=DB::table('setting')->value('week_days');
+            $number_of_class=DB::table('setting')->value('number_of_class');
+            $title = '設定';
+            return view('setting', compact('title','week_days','number_of_class'));
         }
     }
 
     public function store_setting(Request $request)
     {
-        /*$class_name = $request->get('class_name');
-        $professor = $request->get('professor');
-        $classroom = $request->get('classroom');
-        $homework = $request->get('homework');
-
-        DB::table('todos')->insert([
-            'class_name'=>$class_name,
-            'professor'=>$professor,
-            'classroom'=>$classroom,
-            'homework'=>$homework
-        ]);*/
 
         $week_days = $request->get('week_days');
         $number_of_class = $request->get('number_of_class');
 
         DB::table('setting')
-            ->where('id', $id)
+            ->where('id', 1)
             ->update([
                 'week_days' => $week_days,
                 'number_of_class' => $number_of_class
             ]);
 
-        return view('pages.index');
+        //class資料表資料全部刪除重新建立
+        DB::table('class')->truncate();
+        for ($i = 1; $i <= $week_days*$number_of_class; $i++) {
+            DB::table('class')->insert([
+                'class_name' => '課程名稱',
+                'professor' => '教授名字',
+                'classroom' => '教室位置',
+            ]);
+        }
+
+        return redirect(route('show_index'));
     }
 }
