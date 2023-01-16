@@ -18,12 +18,12 @@ class myController extends Controller
                 'number_of_class' => 8,
             ]);
         }
-        $week_days=DB::table('setting')->value('week_days');
-        $number_of_class=DB::table('setting')->value('number_of_class');
+        $week_days = DB::table('setting')->value('week_days');
+        $number_of_class = DB::table('setting')->value('number_of_class');
 
         $db_class_table = DB::table('class')->get();
         if ($db_class_table->isEmpty()) {
-            for ($i = 1; $i <= $week_days*$number_of_class; $i++) {
+            for ($i = 1; $i <= $week_days * $number_of_class; $i++) {
                 DB::table('class')->insert([
                     'class_name' => '課程名稱',
                     'professor' => '教授名字',
@@ -40,9 +40,38 @@ class myController extends Controller
         dd('1');
         */
 
-        $title='課表';
+        $title = '課表';
 
-        return view('index', compact('title','db_class_table','week_days','number_of_class'));
+        return view('index', compact('title', 'db_class_table', 'week_days', 'number_of_class'));
+    }
+
+    public function store_class(Request $request)//接收model表單的資料來更改class資料表的資料
+    {
+        $id = $request->get('id');
+        $class_name = $request->get('class_name');
+        $professor = $request->get('professor');
+        $classroom = $request->get('classroom');
+
+        //使用者若留空則恢復為預設值
+        if($class_name==null){
+            $class_name='課程名稱';
+        }
+        if($professor==null){
+            $professor='教授名字';
+        }
+        if($classroom==null){
+            $classroom='教室位置';
+        }
+
+        DB::table('class')
+            ->where('id', $id)
+            ->update([
+                'class_name' => $class_name,
+                'professor' => $professor,
+                'classroom' => $classroom
+            ]);
+
+        return redirect(route('show_index'));
     }
 
     public function show_setting()
@@ -53,16 +82,15 @@ class myController extends Controller
             return redirect(route('show_index'));
         } else {
             //將目前課表表格設定值傳至setting.blade，用於設定下拉選單預設值
-            $week_days=DB::table('setting')->value('week_days');
-            $number_of_class=DB::table('setting')->value('number_of_class');
+            $week_days = DB::table('setting')->value('week_days');
+            $number_of_class = DB::table('setting')->value('number_of_class');
             $title = '設定';
-            return view('setting', compact('title','week_days','number_of_class'));
+            return view('setting', compact('title', 'week_days', 'number_of_class'));
         }
     }
 
     public function store_setting(Request $request)
     {
-
         $week_days = $request->get('week_days');
         $number_of_class = $request->get('number_of_class');
 
@@ -75,7 +103,7 @@ class myController extends Controller
 
         //class資料表資料全部刪除重新建立
         DB::table('class')->truncate();
-        for ($i = 1; $i <= $week_days*$number_of_class; $i++) {
+        for ($i = 1; $i <= $week_days * $number_of_class; $i++) {
             DB::table('class')->insert([
                 'class_name' => '課程名稱',
                 'professor' => '教授名字',
